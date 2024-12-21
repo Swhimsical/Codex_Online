@@ -19,7 +19,7 @@ public enum Number {
     private final String shorthand;
     Number(int val){
         this.val=val;
-        String[] sh = new String[]{" ","A","2","3","4","5","6","7","8","9","10","J","Q","K","Jo"};
+        String[] sh = new String[]{" ","A","2","3","4","5","6","7","8","9","10","J","Q","K","x","Jo"};
         shorthand = sh[val];
     }
     public int getVal() {

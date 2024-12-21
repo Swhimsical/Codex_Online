@@ -18,6 +18,9 @@ public class Player {
     }
 
     public void swap(int a){
+        swap(a,6);
+    }
+    public void swap(int a,int b){
         Card t = field[6];
         field[6] = field[a];
         field[a] = t;
