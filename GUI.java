@@ -1,12 +1,18 @@
 import java.io.InputStream;
 
 public interface GUI {
-    public void swap(int a, int b);
-    public void draw(Card c);
-    public void win();
-    public void help();
+    void swap(char act, int a, int b);
+     void draw(Card c);
 
-    public void prompt(int p);
 
-    public InputStream source();
+    void turnstart(Player p, Player opp, int pint, Card grave);
+
+    void place(Card c, int i);
+    void discard(Card c);
+     void win();
+     void help();
+
+     void prompt(int p,char O);
+
+     InputStream source();
 }

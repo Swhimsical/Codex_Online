@@ -5,6 +5,9 @@ public class Card {
         this.suit = Suit.label(suit);
         this. value = Number.label(value);
     }
+    public static String shorted(Card c){
+        return c!=null?c.shorthand():"__";
+    }
 
     @Override
     public String toString() {

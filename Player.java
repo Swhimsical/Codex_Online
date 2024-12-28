@@ -17,12 +17,28 @@ public class Player {
         return t;
     }
 
+    public int discard(Card crd, Deck d) {
+        if(crd != null) {
+            d.add(crd, true);
+            if (crd.value == Number.Jack) {
+                return 1;
+            }
+            if (crd.value == Number.Queen) {
+                return 2;
+            }
+            if (crd.value == Number.King) {
+                return 3;
+            }
+        }
+        return 0;
+    }
+
     public void swap(int a){
         swap(a,6);
     }
     public void swap(int a,int b){
-        Card t = field[6];
-        field[6] = field[a];
+        Card t = field[b];
+        field[b] = field[a];
         field[a] = t;
     }
 
@@ -45,6 +61,13 @@ public class Player {
         }
         return false;
     }
-
+    public String visible(){
+        return String.format("%1$3s ", Card.shorted(field[0])) + String.format("%1$3s ",Card.shorted(field[1])) + String.format("%1$3s\n",Card.shorted(field[2]))+String.format("%1$14s",Card.shorted(field[6]));
+    }
+    @Override
+    public String toString(){
+        String str = visible();
+        return str+String.format("\n%1$3s", Card.shorted(field[3]))+String.format(" %1$3s",Card.shorted(field[4]))+String.format(" %1$3s",Card.shorted(field[5]));
+    }
 
 }
