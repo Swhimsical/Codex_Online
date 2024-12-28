@@ -5,7 +5,7 @@ import java.util.LinkedList;
 public class Deck {
     private LinkedList<Card> deck;
     public Deck(boolean full){
-        deck = new LinkedList<Card>();
+        deck = new LinkedList<>();
         if(full) {
             for (int i = 1; i <= 4; i++) {
                 for (int j = 1; j <= 13; j++) {

@@ -43,6 +43,9 @@ public class Player {
     }
 
     public boolean win(){
+        if(field[0] == null||field[1]==null||field[2]==null){
+            return false;
+        }
         if(field[0].value.getVal()-1==field[1].value.getVal() && field[1].value.getVal()-1==field[2].value.getVal()){
             return true;
         }
@@ -54,12 +57,9 @@ public class Player {
                         (field[2].value==Number.Queen && field[0].value==Number.Ace))){
             return true;
         }
-        if(field[1].value==Number.Ace &&
-                ( (field[0].value==Number.King && field[2].value==Number.Two) ||
-                        (field[2].value==Number.King && field[0].value==Number.Two))){
-            return true;
-        }
-        return false;
+        return field[1].value == Number.Ace &&
+                ((field[0].value == Number.King && field[2].value == Number.Two) ||
+                        (field[2].value == Number.King && field[0].value == Number.Two));
     }
     public String visible(){
         return String.format("%1$3s ", Card.shorted(field[0])) + String.format("%1$3s ",Card.shorted(field[1])) + String.format("%1$3s\n",Card.shorted(field[2]))+String.format("%1$14s",Card.shorted(field[6]));

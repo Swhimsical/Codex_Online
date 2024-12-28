@@ -34,14 +34,26 @@ public class GameRules {
         }
         String text;
         String[] line;
-        gui.turnstart(p,opp,pint,grave.top());
+        int act = actions+1;
         while (actions!=0){
+            if(act!=actions){
+                gui.turnstart(p,opp,pint,grave.top());
+                act=actions;
+            }
             gui.prompt(Active,'T');
             text = read.nextLine();
             if(!text.isBlank()){
                 line = text.split(" ");
                 if(line[0].equals("h")||line[0].equals("help")){
                     gui.help();
+                }
+                if(line[0].equals("w")||line[0].equals("win")&& p.win()){
+                    if(actions!=2){
+                        gui.prompt(Active,'N');
+                    } else {
+                        gui.prompt(Active,'W');
+                        return true;
+                    }
                 }
 
                 if((line[0].equals("s")||line[0].equals("swap"))&&line.length==2&&line[1].matches("\\d")){
@@ -62,47 +74,10 @@ public class GameRules {
                     if(l>=0){
                         gui.place(crd,l);
                         crd = p.place(crd,l);
-                        l=p.discard(crd,grave);
-                        gui.discard(crd);
-                        text = "x";
-                        if(l==3){
-                            kng[0] = true;
-                            gui.prompt(Active,'K');
-                        } else if(l==2){
-                            gui.prompt(Active,'Q');
-                            while(!((text.matches("m\\d") || text.matches("o\\d"))&&text.charAt(1)<'4'&&text.charAt(1)!='0')){
-                                text = read.nextLine();
-                                text=text.replaceAll("\\s+","");
-                            }
-                            int t1 = text.charAt(1)-'1';
-                            if(text.charAt(0)=='m'){
-                                p.swap(t1,t1+3);
-                                gui.swap('m',t1,t1-3);
-                            } else {
-                                opp.swap(t1,t1-3);
-                                gui.swap('o',t1,t1-3);
-                            }
-
-                        } else if(l==1){
-                            gui.prompt(Active,'J');
-                            while(!((text.matches("m\\d\\d") || text.matches("o\\d\\d"))&&text.charAt(1)<'8'&&text.charAt(2)<'8'&&text.charAt(1)!='0'&&text.charAt(2)!='0')){
-                                text = read.nextLine();
-                                text = text.replaceAll("\\s+","");
-                            }
-                            int t1 = text.charAt(1)-'1';
-                            int t2 = text.charAt(2)-'1';
-                            if(text.charAt(0)=='m'){
-                                p.swap(t1,t2);
-                                gui.swap('m',t1,t2);
-                            } else {
-                                opp.swap(t1,t2);
-                                gui.swap('o',t1,t2);
-                            }
-                        }
-                    } else {
-                        p.discard(crd,grave);
-                        gui.discard(crd);
                     }
+                    l=p.discard(crd,grave);
+                    gui.discard(crd);
+                    discard(l,p,opp);
 
                     actions--;
                 }
@@ -120,11 +95,49 @@ public class GameRules {
         gui.help();
         while (looping){
             int other = (Active==0)?1:0;
-            looping = !turn(plrs[Active],plrs[other],Active); //FIXME: IMPLEMENT A DISCARDED CARD FUNCTION
+            looping = !turn(plrs[Active],plrs[other],Active);
             if(Active==0){
                 Active=1;
             } else {
                 Active = 0;
+            }
+        }
+    }
+
+    public void discard(int A,Player p,Player opp){
+        String text = "x";
+        if(A==3){
+            kng[0] = true;
+            gui.prompt(Active,'K');
+        } else if(A==2){
+            gui.prompt(Active,'Q');
+            while(!((text.matches("m\\d") || text.matches("o\\d"))&&text.charAt(1)<'4'&&text.charAt(1)!='0')){
+                text = read.nextLine();
+                text=text.replaceAll("\\s+","");
+            }
+            int t1 = text.charAt(1)-'1';
+            if(text.charAt(0)=='m'){
+                p.swap(t1,t1+3);
+                gui.swap('m',t1,t1-3);
+            } else {
+                opp.swap(t1,t1-3);
+                gui.swap('o',t1,t1-3);
+            }
+
+        } else if(A==1){
+            gui.prompt(Active,'J');
+            while(!((text.matches("m\\d\\d") || text.matches("o\\d\\d"))&&text.charAt(1)<'8'&&text.charAt(2)<'8'&&text.charAt(1)!='0'&&text.charAt(2)!='0')){
+                text = read.nextLine();
+                text = text.replaceAll("\\s+","");
+            }
+            int t1 = text.charAt(1)-'1';
+            int t2 = text.charAt(2)-'1';
+            if(text.charAt(0)=='m'){
+                p.swap(t1,t2);
+                gui.swap('m',t1,t2);
+            } else {
+                opp.swap(t1,t2);
+                gui.swap('o',t1,t2);
             }
         }
     }

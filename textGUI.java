@@ -107,6 +107,10 @@ public class textGUI implements GUI{
             System.out.println("What would you like to flip? Use: {m/o} # (1-3 for each stack)");
         } else if (o=='K'){
             System.out.println("Your opponent has one action next round.");
+        } else if (o=='N'){
+            System.out.println("You do not have enough actions to win");
+        } else if (o=='W'){
+            System.out.println("Congratulations!\n Player "+(p+1)+" has won the game!");
         }
     }
 
