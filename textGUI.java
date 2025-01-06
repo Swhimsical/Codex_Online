@@ -31,9 +31,9 @@ public class textGUI implements GUI{
             if(b%3==0){
                 strB+=" left card";
             } else if(b%3==1){
-                strB+=" middle card";
+                strB+="middle card";
             } else {
-                strB+=" right card";
+                strB+="right card";
             }
         }
         if(act=='m') {
@@ -111,7 +111,23 @@ public class textGUI implements GUI{
             System.out.println("You do not have enough actions to win");
         } else if (o=='W'){
             System.out.println("Congratulations!\n Player "+(p+1)+" has won the game!");
-        }
+        } else if (o=='d'){
+            System.out.println("You cannot place it here! pick again");
+        } else if (o=='L'){
+            System.out.println("A continuous loop was triggered! Draw high to decide who wins");
+        } else if (o=='1'){
+            System.out.println("Player 1 won the draw! Player 2 must draw high and replace a looping card");
+        } else if (o=='2'){
+            System.out.println("Player 2 won the draw! Player 1 must draw high and replace a looping card");
+        } /* else if (o==''){
+            System.out.println("");
+        } */
+    }
+
+    @Override
+    public void tie(int active, Card c1, Card c2) {
+        System.out.println("Player 1 drew the "+c1+" ("+c1.shorthand()+").");
+        System.out.println("Player 2 drew the "+c2+" ("+c2.shorthand()+").");
     }
 
     @Override

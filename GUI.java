@@ -13,6 +13,6 @@ public interface GUI {
      void help();
 
      void prompt(int p,char O);
-
+     void tie(int active, Card c1, Card c2);
      InputStream source();
 }
